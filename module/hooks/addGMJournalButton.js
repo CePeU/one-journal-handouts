@@ -18,7 +18,8 @@ export const addGMJournalButton = () => {
     // Add the button
     if (buttons.find((button) => button.class === CONSTANTS.MODULE_NAME)) return;
     if (journal instanceof DocumentSheet) {
-      if (journal.document.id !== gmJournalId) return;
+      if (gmJournalId === "all" && journal.document.id === playersJournalId) return;
+      if (gmJournalId !== "all" && journal.document.id !== gmJournalId) return;
 
       buttons.unshift({
         icon: "fas fa-square-share-nodes fa-fw",

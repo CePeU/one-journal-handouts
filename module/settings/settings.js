@@ -31,7 +31,8 @@ export function registerSettings() {
     config: true,
     default: null,
     type: String,
-    choices: journalEntriesList
+    choices: () =>
+      foundry.utils.mergeObject({ all: game.i18n.localize("all") }, journalEntriesList())
   });
 
   // Players Journal setting
