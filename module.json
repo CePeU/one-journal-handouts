@@ -1,0 +1,50 @@
+{
+  "id": "one-journal-handouts",
+  "title": "One Journal Handouts",
+  "description": "One Journal Handouts: an easy way to manage and share handouts.",
+  "version": "",
+  "library": "false",
+  "compatibility": {
+    "minimum": 11,
+    "verified": "11.309"
+  },
+  "authors": [
+    {
+      "name": "DarKDinDoN",
+      "url": "https://github.com/DarKDinDoN",
+      "discord": "Maxime#1562"
+    }
+  ],
+  "relationships": {},
+  "conflicts": [],
+  "socket": true,
+  "scripts": [],
+  "esmodules": ["./build/one-journal-handouts.js"],
+  "styles": ["./build/one-journal-handouts.css"],
+  "flags": {
+    "hotReload": {
+      "extensions": ["css", "json", "hbs"],
+      "paths": ["build/one-journal-handouts.css", "templates/*.hbs", "languages/*.json"]
+    }
+  },
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "languages/en.json"
+    },
+    {
+      "lang": "fr",
+      "name": "Français",
+      "path": "languages/fr.json"
+    }
+  ],
+  "url": "",
+  "bugs": "",
+  "changelog": "",
+  "manifest": "",
+  "download": "",
+  "license": "",
+  "readme": "",
+  "media": []
+}
