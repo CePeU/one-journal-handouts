@@ -15,7 +15,8 @@ const journalEntriesList = () => {
   const journalEntriesChoices = {};
 
   for (const [key, journal] of game.journal.entries()) {
-    journalEntriesChoices[key] = journal.name;
+    journalEntriesChoices[key] =
+      journal.name.length > 30 ? `${journal.name.slice(0, 30)}...` : journal.name;
   }
 
   return journalEntriesChoices;
