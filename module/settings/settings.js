@@ -14,6 +14,8 @@ export const SETTINGS = {
 const journalEntriesList = () => {
   const journalEntriesChoices = {};
 
+  if (!game.journal) return;
+
   for (const [key, journal] of game.journal.entries()) {
     journalEntriesChoices[key] =
       journal.name.length > 30 ? `${journal.name.slice(0, 30)}...` : journal.name;
@@ -26,31 +28,35 @@ const journalEntriesList = () => {
 export function registerSettings() {
   // GM Journal setting
   game.settings.register(CONSTANTS.MODULE_NAME, SETTINGS.GM_JOURNAL, {
-    name: game.i18n.localize(`${CONSTANTS.MODULE_NAME}.settings.${SETTINGS.GM_JOURNAL}-name`),
-    hint: game.i18n.localize(`${CONSTANTS.MODULE_NAME}.settings.${SETTINGS.GM_JOURNAL}-hint`),
+    name: `${CONSTANTS.MODULE_NAME}.settings.${SETTINGS.GM_JOURNAL}-name`,
+    hint: `${CONSTANTS.MODULE_NAME}.settings.${SETTINGS.GM_JOURNAL}-hint`,
     scope: "world",
     config: true,
-    default: null,
-    type: String,
-    choices: () =>
-      foundry.utils.mergeObject({ all: game.i18n.localize("all") }, journalEntriesList())
+    default: "all",
+    type: new foundry.data.fields.StringField({
+      blank: false,
+      choices: () =>
+        foundry.utils.mergeObject({ all: game.i18n.localize("all") }, journalEntriesList())
+    })
   });
 
   // Players Journal setting
   game.settings.register(CONSTANTS.MODULE_NAME, SETTINGS.PLAYERS_JOURNAL, {
-    name: game.i18n.localize(`${CONSTANTS.MODULE_NAME}.settings.${SETTINGS.PLAYERS_JOURNAL}-name`),
-    hint: game.i18n.localize(`${CONSTANTS.MODULE_NAME}.settings.${SETTINGS.PLAYERS_JOURNAL}-hint`),
+    name: `${CONSTANTS.MODULE_NAME}.settings.${SETTINGS.PLAYERS_JOURNAL}-name`,
+    hint: `${CONSTANTS.MODULE_NAME}.settings.${SETTINGS.PLAYERS_JOURNAL}-hint`,
     scope: "world",
     config: true,
-    default: null,
-    type: String,
-    choices: journalEntriesList
+    default: "__!none!__",
+    type: new foundry.data.fields.StringField({
+      blank: false,
+      choices: journalEntriesList
+    })
   });
 
   // Open page setting
   game.settings.register(CONSTANTS.MODULE_NAME, SETTINGS.OPEN_PAGE, {
-    name: game.i18n.localize(`${CONSTANTS.MODULE_NAME}.settings.${SETTINGS.OPEN_PAGE}-name`),
-    hint: game.i18n.localize(`${CONSTANTS.MODULE_NAME}.settings.${SETTINGS.OPEN_PAGE}-hint`),
+    name: `${CONSTANTS.MODULE_NAME}.settings.${SETTINGS.OPEN_PAGE}-name`,
+    hint: `${CONSTANTS.MODULE_NAME}.settings.${SETTINGS.OPEN_PAGE}-hint`,
     scope: "world",
     config: true,
     default: true,

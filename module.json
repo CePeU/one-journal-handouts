@@ -5,8 +5,8 @@
   "version": "",
   "library": "false",
   "compatibility": {
-    "minimum": 11,
-    "verified": "11.309"
+    "minimum": 12,
+    "verified": "12.324"
   },
   "authors": [
     {
@@ -16,7 +16,6 @@
     }
   ],
   "relationships": {},
-  "conflicts": [],
   "socket": true,
   "scripts": [],
   "esmodules": ["./build/one-journal-handouts.js"],
