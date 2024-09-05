@@ -4,7 +4,7 @@
   "private": true,
   "description": "One Journal Handouts: an easy way to manage and share handouts.",
   "license": "MIT",
-  "author": "DarKDinDoN",
+  "author": "Maxime",
   "scripts": {
     "build": "gulp build",
     "gulp": "gulp"
