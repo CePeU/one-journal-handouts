@@ -48,7 +48,7 @@ export function registerSettings() {
     config: true,
     default: "__!none!__",
     type: new foundry.data.fields.StringField({
-      blank: false,
+      blank: true,
       choices: journalEntriesList
     })
   });
