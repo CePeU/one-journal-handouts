@@ -13,6 +13,11 @@ export const addGMJournalButton = () => {
     // Making sure settings are set
     const gmJournalId = game.settings.get(CONSTANTS.MODULE_NAME, SETTINGS.GM_JOURNAL);
     const playersJournalId = game.settings.get(CONSTANTS.MODULE_NAME, SETTINGS.PLAYERS_JOURNAL);
+    const sharingMode = game.settings.get(CONSTANTS.MODULE_NAME, SETTINGS.SHARING_MODE);
+    const duplicatedJournalId = game.settings.get(
+      CONSTANTS.MODULE_NAME,
+      SETTINGS.DUPLICATED_JOURNAL
+    );
     if (!gmJournalId || !playersJournalId) return;
 
     // Add the button
@@ -49,6 +54,24 @@ export const addGMJournalButton = () => {
           } else {
             // if not created yet
             const newPage = await createNewPage(journal, pageId, playersJournal);
+
+            // If should duplicate
+            if (sharingMode === "duplicate") {
+              const duplicatedJournal = game.journal.get(duplicatedJournalId);
+
+              if (!duplicatedJournal)
+                return ui.notifications.error(
+                  game.i18n.localize(`${CONSTANTS.MODULE_NAME}.no-duplicated-journal`)
+                );
+
+              await createNewPage(journal, pageId, duplicatedJournal);
+              deletePage(journal, pageId);
+            }
+
+            // If should delete
+            if (sharingMode === "delete") deletePage(journal, pageId);
+
+            //Finally open the page
             openJournal(playersJournal, newPage.id);
           }
 
@@ -84,6 +107,18 @@ const createNewPage = async (journal, pageId, playersJournal) => {
 
   // Return the new page
   return newPage;
+};
+
+/**
+ * Delete a page from a journal
+ * @param {JournalEntry} journal the journal
+ * @param {string} pageId the page id to delete
+ */
+const deletePage = async (journal, pageId) => {
+  const page = journal.document.pages.find((p) => p.id === pageId);
+  if (!page) return;
+
+  await journal.document.deleteEmbeddedDocuments("JournalEntryPage", [page.id]);
 };
 
 /**

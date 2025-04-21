@@ -5,11 +5,16 @@
       "gm-journal-hint": "Journal dans lequel se trouve toutes les aides de jeu à partager aux joueurs. ⚠️ Ne partagez pas ce journal avec les joueurs.",
       "players-journal-name": "Journal des joueurs (monde)",
       "players-journal-hint": "Journal dans lequel les joueurs peuvent visualiser toutes les aides de jeux partagées par le GM. ⚠️ N'oubliez pas de partager ce journal avec les joueurs.",
+      "sharing-mode-name": "Mode de partage (monde)",
+      "sharing-mode-hint": "Le \"mode de partage\" vous permet de définir ce qu'il advient de l'aide de jeu une fois partagée. \"Défaut\" : l'aide de jeu est gardée telle quelle. \"Dupliquer\" : l'aide de jeu est supprimée du journal et dupliquée dans un autre journal (défini ci-dessous). \"Supprimer\" : l'aide de jeu est supprimée. ",
+      "duplicated-journal-name": "Journal dupliqué (monde)",
+      "duplicated-journal-hint": "Le journal dans lequel toutes les aides de jeu seront dupliquées. ⚠️ Ce paramètre ne s'applique que si \"Dupliquer\" est sélectionné pour le paramètre \"Mode de partage\".",
       "open-page-name": "Ouvrir la page au GM (monde)",
       "open-page-hint": "Lorsqu'une aide de jeu est partagée avec les joueurs, si ce paramètre est activé, la page nouvellement créée sera également ouverte au MJ."
     },
     "share-with-players": "Partager la page actuelle",
     "no-players-journal": "Le journal des joueurs n'existe pas.",
+    "no-duplicated-journal": "Le journal de duplication n'existe pas.",
     "successful": "Page du journal partagée avec succès aux joueurs."
   }
 }
