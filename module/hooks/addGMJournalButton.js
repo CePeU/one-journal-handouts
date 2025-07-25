@@ -6,32 +6,32 @@ import { EVENTS } from "../shared/sockets";
  * Add a button to the GM journal to share handouts to players
  */
 export const addGMJournalButton = () => {
-  Hooks.on("getJournalSheetHeaderButtons", (journal, buttons) => {
-    // Only GM are allowed
-    if (!game.users.current.isGM) return;
+  const hooks = ["getJournalSheetHeaderButtons", "getHeaderControlsJournalEntrySheet"];
+  for (const hook of hooks) {
+    Hooks.on(hook, (journal, buttons) => {
+      // Only GM are allowed
+      if (!game.users.current.isGM) return;
 
-    // Making sure settings are set
-    const gmJournalId = game.settings.get(CONSTANTS.MODULE_NAME, SETTINGS.GM_JOURNAL);
-    const playersJournalId = game.settings.get(CONSTANTS.MODULE_NAME, SETTINGS.PLAYERS_JOURNAL);
-    const sharingMode = game.settings.get(CONSTANTS.MODULE_NAME, SETTINGS.SHARING_MODE);
-    const duplicatedJournalId = game.settings.get(
-      CONSTANTS.MODULE_NAME,
-      SETTINGS.DUPLICATED_JOURNAL
-    );
-    if (!gmJournalId || !playersJournalId) return;
+      // Making sure settings are set
+      const gmJournalId = game.settings.get(CONSTANTS.MODULE_NAME, SETTINGS.GM_JOURNAL);
+      const playersJournalId = game.settings.get(CONSTANTS.MODULE_NAME, SETTINGS.PLAYERS_JOURNAL);
+      const sharingMode = game.settings.get(CONSTANTS.MODULE_NAME, SETTINGS.SHARING_MODE);
+      const duplicatedJournalId = game.settings.get(
+        CONSTANTS.MODULE_NAME,
+        SETTINGS.DUPLICATED_JOURNAL
+      );
+      if (!gmJournalId || !playersJournalId) return;
 
-    // Add the button
-    if (buttons.find((button) => button.class === CONSTANTS.MODULE_NAME)) return;
-    if (journal instanceof DocumentSheet) {
-      if (gmJournalId === "all" && journal.document.id === playersJournalId) return;
-      if (gmJournalId !== "all" && journal.document.id !== gmJournalId) return;
+      // Add the button
+      if (buttons.find((button) => button.class === CONSTANTS.MODULE_NAME)) return;
+      if (
+        journal instanceof foundry.appv1.api.DocumentSheet ||
+        journal instanceof foundry.applications.sheets.journal.JournalEntrySheet
+      ) {
+        if (gmJournalId === "all" && journal.document.id === playersJournalId) return;
+        if (gmJournalId !== "all" && journal.document.id !== gmJournalId) return;
 
-      buttons.unshift({
-        icon: "fas fa-square-share-nodes fa-fw",
-        label: `${CONSTANTS.MODULE_NAME}.share-with-players`,
-        class: CONSTANTS.MODULE_NAME,
-
-        onclick: async () => {
+        const action = async () => {
           // Making sure players journal exists
           const playersJournal = game.journal.get(playersJournalId);
           if (!playersJournal)
@@ -45,7 +45,9 @@ export const addGMJournalButton = () => {
 
           // Check if page has already been created in the players journal (using flags)
           const existingPage = playersJournal.pages.find(
-            (p) => p.flags?.[CONSTANTS.MODULE_NAME] === pageId
+            (p) =>
+              p.flags?.[CONSTANTS.MODULE_NAME] === pageId ||
+              p.flags?.[CONSTANTS.MODULE_NAME]?.pageId === pageId
           );
 
           if (existingPage) {
@@ -77,10 +79,19 @@ export const addGMJournalButton = () => {
 
           // Inform GM of success
           ui.notifications.info(game.i18n.localize(`${CONSTANTS.MODULE_NAME}.successful`));
-        }
-      });
-    }
-  });
+        };
+
+        buttons.unshift({
+          icon: "fas fa-square-share-nodes fa-fw",
+          label: `${CONSTANTS.MODULE_NAME}.share-with-players`,
+          class: CONSTANTS.MODULE_NAME,
+
+          onClick: action,
+          onclick: action
+        });
+      }
+    });
+  }
 };
 
 /**
@@ -95,7 +106,7 @@ const createNewPage = async (journal, pageId, playersJournal) => {
   const page = Object.assign({}, journal.document.pages.find((p) => p.id === pageId).toObject());
 
   // Add a flag indicating the original page ID
-  foundry.utils.setProperty(page, `flags.${CONSTANTS.MODULE_NAME}`, pageId);
+  foundry.utils.setProperty(page, `flags.${CONSTANTS.MODULE_NAME}`, { pageId });
 
   // Figure out the new sort (so this will be the last page added)
   const allSorts = playersJournal.pages.map((p) => p.sort);
@@ -139,7 +150,7 @@ const openJournal = (journal, pageId) => {
   if (openPage) {
     journal.sheet.render(true, {
       pageId,
-      sheetMode: JournalSheet.VIEW_MODES.SINGLE
+      sheetMode: foundry.applications.sheets.journal.JournalEntrySheet.VIEW_MODES
     });
   }
 };

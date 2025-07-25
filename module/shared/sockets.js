@@ -18,7 +18,7 @@ export const registerSockets = () => {
 
     journal.sheet.render(true, {
       pageId,
-      sheetMode: JournalSheet.VIEW_MODES.SINGLE
+      sheetMode: foundry.appv1.sheets.JournalSheet.VIEW_MODES.SINGLE
     });
   });
 };
