@@ -1,4 +1,6 @@
 import { CONSTANTS } from "../shared/constants";
+import BlacklistSettings from "./blacklist-settings";
+const { ArrayField, StringField } = foundry.data.fields;
 
 /** Settings global names */
 export const SETTINGS = {
@@ -6,12 +8,13 @@ export const SETTINGS = {
   PLAYERS_JOURNAL: "players-journal",
   SHARING_MODE: "sharing-mode",
   DUPLICATED_JOURNAL: "duplicated-journal",
-  OPEN_PAGE: "open-page"
+  OPEN_PAGE: "open-page",
+  BLACKLIST: "blacklist"
 };
 
 /**
  * Get all journal entries and compute them in an object compatible with a dropdown menu
- * @returns {object} the list of journal entries
+ * @returns {object | void} the list of journal entries
  */
 const journalEntriesList = () => {
   const journalEntriesChoices = {};
@@ -28,6 +31,22 @@ const journalEntriesList = () => {
 
 /** Register settings */
 export function registerSettings() {
+  // Blacklist hidden setting
+  game.settings.register(CONSTANTS.MODULE_NAME, SETTINGS.BLACKLIST, {
+    config: false,
+    scope: CONST.SETTING_SCOPES.WORLD,
+    type: new ArrayField(new StringField(), { initial: [], gmOnly: true })
+  });
+
+  // Blacklist menu
+  game.settings.registerMenu(CONSTANTS.MODULE_NAME, SETTINGS.BLACKLIST, {
+    label: `${CONSTANTS.MODULE_NAME}.settings.${SETTINGS.BLACKLIST}.label`,
+    name: `${CONSTANTS.MODULE_NAME}.settings.${SETTINGS.BLACKLIST}.name`,
+    hint: `${CONSTANTS.MODULE_NAME}.settings.${SETTINGS.BLACKLIST}.hint`,
+    restricted: true,
+    type: BlacklistSettings
+  });
+
   // GM Journal setting
   game.settings.register(CONSTANTS.MODULE_NAME, SETTINGS.GM_JOURNAL, {
     name: `${CONSTANTS.MODULE_NAME}.settings.${SETTINGS.GM_JOURNAL}-name`,

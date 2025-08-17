@@ -1,5 +1,6 @@
 {
   "one-journal-handouts": {
+    "base.validate": "Validate",
     "settings": {
       "gm-journal-name": "Handouts journal entry (world)",
       "gm-journal-hint": "Journal entry holding all handouts to be shared with players. ⚠️ Don't share this journal entry with players.",
@@ -10,7 +11,13 @@
       "duplicated-journal-name": "Duplicated journal entry (world)",
       "duplicated-journal-hint": "The journal entry where all handouts will be duplicated. ⚠️ This setting only applied if \"Duplicated\" is selected for the \"Sharing mode\" setting.",
       "open-page-name": "Open page to GM (world)",
-      "open-page-hint": "When a handout is shared to players, if this setting is enabled, the newly created page will also be opened to the GM."
+      "open-page-hint": "When a handout is shared to players, if this setting is enabled, the newly created page will also be opened to the GM.",
+      "blacklist": {
+        "label": "User Blacklist",
+        "name": "Configure User Blacklist",
+        "hint": "Exclude specific users from auto opening journal.",
+        "description": "Check the boxes next to users you want to exclude from auto opening journal."
+      }
     },
     "share-with-players": "Share current page",
     "no-players-journal": "Players journal does not exist.",

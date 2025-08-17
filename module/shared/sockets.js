@@ -1,3 +1,4 @@
+import { SETTINGS } from "../settings/settings";
 import { CONSTANTS } from "./constants";
 
 /** Events global names */
@@ -12,6 +13,9 @@ export const registerSockets = () => {
   // Render a journal entry page
   game.socket.on(`module.${CONSTANTS.MODULE_NAME}`, ({ event, journalId, pageId }) => {
     if (event !== EVENTS.OPEN_PAGE) return;
+
+    const blacklistSettings = game.settings.get(CONSTANTS.MODULE_NAME, SETTINGS.BLACKLIST);
+    if (blacklistSettings.includes(game.users.current.id)) return;
 
     const journal = game.journal.get(journalId);
     if (!journal) return;

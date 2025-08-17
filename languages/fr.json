@@ -1,5 +1,6 @@
 {
   "one-journal-handouts": {
+    "base.validate": "Valider",
     "settings": {
       "gm-journal-name": "Journal contenant les aides de jeu (monde)",
       "gm-journal-hint": "Journal dans lequel se trouve toutes les aides de jeu à partager aux joueurs. ⚠️ Ne partagez pas ce journal avec les joueurs.",
@@ -10,7 +11,13 @@
       "duplicated-journal-name": "Journal dupliqué (monde)",
       "duplicated-journal-hint": "Le journal dans lequel toutes les aides de jeu seront dupliquées. ⚠️ Ce paramètre ne s'applique que si \"Dupliquer\" est sélectionné pour le paramètre \"Mode de partage\".",
       "open-page-name": "Ouvrir la page au GM (monde)",
-      "open-page-hint": "Lorsqu'une aide de jeu est partagée avec les joueurs, si ce paramètre est activé, la page nouvellement créée sera également ouverte au MJ."
+      "open-page-hint": "Lorsqu'une aide de jeu est partagée avec les joueurs, si ce paramètre est activé, la page nouvellement créée sera également ouverte au MJ.",
+      "blacklist": {
+        "label": "Liste noire d'utilisateurs",
+        "name": "Liste noire d'utilisateurs",
+        "hint": "Exclure des utilisateurs spécifiques de l'ouverture automatique du journal.",
+        "description": "Cochez les cases à côté des utilisateurs qui ne doivent pas ouvrir le journal automatiquement après partage d'une page."
+      }
     },
     "share-with-players": "Partager la page actuelle",
     "no-players-journal": "Le journal des joueurs n'existe pas.",

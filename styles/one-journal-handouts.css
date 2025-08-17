@@ -1,1 +1,32 @@
 /* INTERNAL */
+#ojh-blacklist {
+  /* -------------------------------------------- */
+  /*  Pip
+  /* -------------------------------------------- */
+
+  i.pip {
+    /*  CSS variables  */
+    --pip-size: 0.5rem;
+
+    /*  Reset CSS  */
+    all: unset;
+    box-sizing: border-box;
+
+    /*  Actual properties  */
+    display: inline flex;
+
+    flex: 0 0 var(--pip-size);
+    height: var(--pip-size);
+
+    margin: 2px;
+
+    background: var(--pip-color);
+    box-shadow: 0 0 2px rgba(var(--shm-charcoal) / 1);
+    border-radius: 100%;
+
+    /*  Variants  */
+    &.padded {
+      margin-right: 0.5rem;
+    }
+  }
+}
